@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lykkehjul">
         <activity
+            android:name=".Spilgame"
+            android:exported="true" />
+        <activity
+            android:name=".SpilGame"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
