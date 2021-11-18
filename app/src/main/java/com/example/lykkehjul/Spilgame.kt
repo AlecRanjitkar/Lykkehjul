@@ -1,6 +1,7 @@
 package com.example.lykkehjul
 
 
+import android.graphics.Point
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -22,6 +23,7 @@ class Spilgame : AppCompatActivity() {
     private lateinit var Besked: TextView
     private lateinit var Knap1: Button
     private lateinit var Liv: TextView
+    private lateinit var Point: TextView
 
 
     var buttons = mutableListOf<TextView>()
@@ -42,6 +44,7 @@ class Spilgame : AppCompatActivity() {
         Besked = findViewById(R.id.Besked)
         Knap1 = findViewById(R.id.Knap1)
         Liv = findViewById(R.id.Liv)
+        Point = findViewById(R.id.Point)
 
         var letter = 'a'
         while (letter <= 'z') {
@@ -126,17 +129,63 @@ class Spilgame : AppCompatActivity() {
                     erHjuletDrejet = true
                 }
 
-            }else{
-                Toast.makeText(applicationContext,"Husk at trykke på et bogstav",Toast.LENGTH_SHORT).show()
-
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "Husk at trykke på et bogstav",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-
         }
     }
 
+    fun fåPoint() {
+        if (tilfældigtSpin.contains("10")) {
+            point += 10
+            Point.text = point
+            Toast.makeText(
+                applicationContext,
+                "Du har fået 10 point ",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (tilfældigtSpin.contains("100")) {
+            point += 100
+            Point.text = point
+            Toast.makeText(
+                applicationContext,
+                "Du har fået 100 point ",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (tilfældigtSpin.contains("500")) {
+            point += 500
+            Point.text = point
+            Toast.makeText(
+                applicationContext,
+                "Du har fået 500 point ",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (tilfældigtSpin.contains("1000")) {
+            point += 1000
+            Point.text = point
+            Toast.makeText(
+                applicationContext,
+                "Du har fået 1000 point ",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else if (tilfældigtSpin.contains("1500")) {
+            point += 1500
+            Point.text = point
+            Toast.makeText(
+                applicationContext,
+                "Du har fået 1500 point ",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+
+    }
 
     fun getBogstavFraBruger() {
-
         for (button in buttons) {
             button.setOnClickListener {
                 if (erHjuletDrejet) {
@@ -150,6 +199,8 @@ class Spilgame : AppCompatActivity() {
                                 )
                             )
                         )
+                        fåPoint()
+
                         Toast.makeText(
                             applicationContext,
                             "Du har trykket på bogstavet ${button.text.toString().lowercase()}",
