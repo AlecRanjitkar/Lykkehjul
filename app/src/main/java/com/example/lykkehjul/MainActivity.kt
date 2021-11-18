@@ -3,13 +3,8 @@ package com.example.lykkehjul
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.example.lykkehjul.Adapter.ItemAdapter
-import com.example.lykkehjul.Data.Datasource
-import kotlin.random.Random
+
 
 
 class MainActivity : AppCompatActivity() {

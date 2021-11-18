@@ -4,4 +4,5 @@
     <item name="b" type="id" />
     <item name="c" type="id" />
     <item name="d" type="id" />
+    <item name="pointNavn" type="id" />
 </resources>

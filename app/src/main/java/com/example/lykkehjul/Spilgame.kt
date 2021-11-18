@@ -95,34 +95,41 @@ class Spilgame : AppCompatActivity() {
     var erHjuletDrejet = false
     fun drejHjul() {
         Knap.setOnClickListener {
+            if (!erHjuletDrejet) {
+                val hjulSpin = Datasource().loadpoint()
+                tilfældigtSpin = hjulSpin.random().toString()
+                Besked.setText(tilfældigtSpin)
 
-            val hjulSpin = Datasource().loadpoint()
-            tilfældigtSpin = hjulSpin.random().toString()
-            Besked.setText(tilfældigtSpin)
+                if (tilfældigtSpin.contains("Ekstra liv")) {
+                    liv += 1
+                    Liv.setText(liv.toString())
+                    Toast.makeText(
+                        applicationContext,
+                        "Du har fået et ekstra liv",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                } else if (tilfældigtSpin.contains("Tabt liv")) {
+                    liv -= 1
+                    Liv.setText(liv.toString())
+                    Toast.makeText(applicationContext, "Du har mistet et liv", Toast.LENGTH_SHORT)
+                        .show()
+                } else if (tilfældigtSpin.contains("Konkurs")) {
+                    liv = 0
+                    Liv.setText(liv.toString())
+                    Toast.makeText(
+                        applicationContext,
+                        "Du er gået konkurs og har hermed tabt spillet",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    erHjuletDrejet = true
+                }
 
-            if (tilfældigtSpin.contains("Ekstra liv")) {
-                liv += 1
-                Liv.setText(liv.toString())
-                Toast.makeText(applicationContext, "Du har fået et ekstra liv", Toast.LENGTH_SHORT)
-                    .show()
-            } else if (tilfældigtSpin.contains("Tabt liv")) {
-                liv -= 1
-                Liv.setText(liv.toString())
-                Toast.makeText(applicationContext, "Du har mistet et liv", Toast.LENGTH_SHORT)
-                    .show()
-            } else if (tilfældigtSpin.contains("Konkurs")) {
-                liv = 0
-                Liv.setText(liv.toString())
-                Toast.makeText(
-                    applicationContext,
-                    "Du er gået konkurs og har hermed tabt spillet",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+            }else{
+                Toast.makeText(applicationContext,"Husk at trykke på et bogstav",Toast.LENGTH_SHORT).show()
 
             }
-
-            erHjuletDrejet = true
 
         }
     }
@@ -148,21 +155,29 @@ class Spilgame : AppCompatActivity() {
                             "Du har trykket på bogstavet ${button.text.toString().lowercase()}",
                             Toast.LENGTH_SHORT
                         ).show()
+                        erHjuletDrejet = false
+
                     } else {
+                        liv -= 1
+                        Liv.setText(liv.toString())
                         Toast.makeText(
                             applicationContext,
                             "Det hemmelig ord har dsv ikke dette bogstav",
                             Toast.LENGTH_SHORT
                         ).show()
+                        erHjuletDrejet = false
                     }
                     button.setVisibility(View.GONE)
                 } else {
                     Toast.makeText(
                         applicationContext,
-                        "Husk at drej hjulet",
+                        "Husk at rotere hjulet",
                         Toast.LENGTH_SHORT
                     ).show()
+
                 }
+                erHjuletDrejet = false
+
             }
         }
 
