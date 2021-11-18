@@ -1,10 +1,11 @@
-plugins {
+ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
 
 android {
     compileSdk 30
+
 
     defaultConfig {
         applicationId "com.example.lykkehjul"
