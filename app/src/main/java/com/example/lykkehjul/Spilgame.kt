@@ -1,6 +1,5 @@
 package com.example.lykkehjul
 
-import android.graphics.Point
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -15,7 +14,6 @@ import com.example.lykkehjul.Logik.SpilLogik.bogstavToGæt
 import com.example.lykkehjul.Logik.SpilLogik.erBogstavIHemmeligtOrd
 import com.example.lykkehjul.Logik.SpilLogik.multiplyBogstaver
 import com.example.lykkehjul.Model.Ord
-import java.lang.StringBuilder
 
 class Spilgame : AppCompatActivity() {
     private lateinit var bogstavLayout: ConstraintLayout
@@ -31,12 +29,10 @@ class Spilgame : AppCompatActivity() {
 
     var buttons = mutableListOf<TextView>()
     var hemmeligtOrd = ""
-    var gætBogstav = ""
     var tilfældigtSpin = ""
     var point = 0
     var liv = 5
     var hemmeligtOrdIUnderscore = mutableListOf<Ord>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,13 +60,13 @@ class Spilgame : AppCompatActivity() {
             buttons.add(view)
             ord++
         }
-        // Random generator til det hemmeligtord
+        //Random generator til ord fra Datasouce klassen
         val myDataset = Datasource().loadOrd()
         var randomNumber = myDataset.random()
         print(randomNumber)
         hemmeligtOrd = myDataset.random().toString()
 
-        // Random generator til antal point man får
+        // Random generator til point fra Datasouce klassen
         val myDataset1 = Datasource().loadpoint()
         randomNumber = myDataset1.random()
         print(randomNumber)
@@ -81,9 +77,8 @@ class Spilgame : AppCompatActivity() {
             Besked.setText(tilfældigtSpin)
 
         }
-
+        // hemmeligtord lavet om til char. hemmeligt ord er usynligt. Det er erstattet med .......
         val charArray = hemmeligtOrd.toCharArray()
-
         val data: MutableList<Ord> = ArrayList()
         for (i in charArray) {
             if (i.equals(' ')) {
@@ -129,6 +124,7 @@ class Spilgame : AppCompatActivity() {
     }
 
     private fun drejHjulIndeholderSpecielleOrd() {
+        //Liv (textview) bliver ændret hvis random generator for ord lander på en af disse statments
         if (tilfældigtSpin.contains("Ekstra liv")) {
             liv += 1
             Liv.setText(liv.toString())
@@ -156,9 +152,10 @@ class Spilgame : AppCompatActivity() {
         }
     }
 
-    fun fåPoint() {
+    fun fåPoint(tastBogstav: String) {
+        //Point textview ændres hvis point generatoren lander på en af disse statments
         if (tilfældigtSpin.equals("10")) {
-            point += 10
+            point += 10 * multiplyBogstaver(hemmeligtOrd, tastBogstav)
             Point.setText(point.toString())
             Toast.makeText(
                 applicationContext,
@@ -208,11 +205,13 @@ class Spilgame : AppCompatActivity() {
                 if (erHjuletDrejet) {
                     val tastBogstav = button.text.toString().lowercase()
                     if (erBogstavIHemmeligtOrd(hemmeligtOrd, tastBogstav)) {
+                        fåPoint(tastBogstav)
                         var setUnderscore = ""
                         for (words in hemmeligtOrdIUnderscore) {
                             setUnderscore += words
                         }
                         val charArray = bogstavToGæt(setUnderscore, hemmeligtOrd, tastBogstav)
+
 
                         val data: MutableList<Ord> = ArrayList()
                         for (i in charArray) {
@@ -220,14 +219,12 @@ class Spilgame : AppCompatActivity() {
 
                         }
                         hemmeligtOrdIUnderscore = data
-                        layoutManager =
-                            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                         adapter = ItemAdapter(data)
 
                         Recycler.layoutManager = layoutManager
                         Recycler.setHasFixedSize(true)
                         Recycler.adapter = adapter
-                        fåPoint()
                         Toast.makeText(
                             applicationContext,
                             "Du har trykket på bogstavet ${button.text.toString().lowercase()}",
@@ -236,11 +233,12 @@ class Spilgame : AppCompatActivity() {
 
 
                     } else {
+                        // mister et liv hvis hemmeligt ord ikke indeholder bogstav
                         liv -= 1
                         Liv.setText(liv.toString())
                         Toast.makeText(
                             applicationContext,
-                            "Det hemmelig ord har dsv ikke dette bogstav",
+                            "Det hemmelig ord har dsv ikke dette bogstav, du har mistet et liv",
                             Toast.LENGTH_SHORT
                         ).show()
                         erHjuletDrejet = false
@@ -252,15 +250,10 @@ class Spilgame : AppCompatActivity() {
                         "Husk at rotere hjulet",
                         Toast.LENGTH_SHORT
                     ).show()
-
                 }
                 erHjuletDrejet = false
 
             }
         }
-
-
     }
-
-
 }
