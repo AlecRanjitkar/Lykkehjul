@@ -13,6 +13,7 @@ import com.example.lykkehjul.Data.Datasource
 import com.example.lykkehjul.Logik.SpilLogik
 import com.example.lykkehjul.Logik.SpilLogik.bogstavToGæt
 import com.example.lykkehjul.Logik.SpilLogik.erBogstavIHemmeligtOrd
+import com.example.lykkehjul.Logik.SpilLogik.multiplyBogstaver
 import com.example.lykkehjul.Model.Ord
 import java.lang.StringBuilder
 
@@ -24,9 +25,9 @@ class Spilgame : AppCompatActivity() {
     private lateinit var Knap1: Button
     private lateinit var Liv: TextView
     private lateinit var Point: TextView
-    private lateinit var Recycler:RecyclerView
-    private var layoutManager:RecyclerView.LayoutManager? = null
-    private var adapter:RecyclerView.Adapter<ItemAdapter.ViewHolder>? = null
+    private lateinit var Recycler: RecyclerView
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<ItemAdapter.ViewHolder>? = null
 
     var buttons = mutableListOf<TextView>()
     var hemmeligtOrd = ""
@@ -35,7 +36,6 @@ class Spilgame : AppCompatActivity() {
     var point = 0
     var liv = 5
     var hemmeligtOrdIUnderscore = mutableListOf<Ord>()
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +53,9 @@ class Spilgame : AppCompatActivity() {
 
         layoutManager = LinearLayoutManager(this)
         Recycler.layoutManager = layoutManager
-
         Recycler.adapter = adapter
 
-
+        //Initialiser bogstaver
         var ord = 'a'
         while (ord <= 'z') {
 
@@ -65,18 +64,16 @@ class Spilgame : AppCompatActivity() {
             buttons.add(view)
             ord++
         }
-
+        // Random generator til det hemmeligtord
         val myDataset = Datasource().loadOrd()
         var randomNumber = myDataset.random()
         print(randomNumber)
-
         hemmeligtOrd = myDataset.random().toString()
 
-
+        // Random generator til antal point man får
         val myDataset1 = Datasource().loadpoint()
         randomNumber = myDataset1.random()
         print(randomNumber)
-
         Knap.setOnClickListener {
 
             val hjulSpin = Datasource().loadpoint()
@@ -86,12 +83,19 @@ class Spilgame : AppCompatActivity() {
         }
 
         val charArray = hemmeligtOrd.toCharArray()
+
         val data: MutableList<Ord> = ArrayList()
         for (i in charArray) {
-            data.add(Ord("_"))
+            if (i.equals(' ')) {
+                data.add(Ord(" "))
+            } else {
+                data.add(Ord("."))
+
+            }
+
         }
         hemmeligtOrdIUnderscore = data
-        layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         adapter = ItemAdapter(data)
 
         Recycler.layoutManager = layoutManager
@@ -104,7 +108,7 @@ class Spilgame : AppCompatActivity() {
     }
 
     var erHjuletDrejet = false
-    
+
     fun drejHjul() {
         Knap.setOnClickListener {
             if (!erHjuletDrejet) {
@@ -112,31 +116,7 @@ class Spilgame : AppCompatActivity() {
                 tilfældigtSpin = hjulSpin.random().toString()
                 Besked.setText(tilfældigtSpin)
 
-                if (tilfældigtSpin.contains("Ekstra liv")) {
-                    liv += 1
-                    Liv.setText(liv.toString())
-                    Toast.makeText(
-                        applicationContext,
-                        "Du har fået et ekstra liv",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                } else if (tilfældigtSpin.contains("Tabt liv")) {
-                    liv -= 1
-                    Liv.setText(liv.toString())
-                    Toast.makeText(applicationContext, "Du har mistet et liv", Toast.LENGTH_SHORT)
-                        .show()
-                } else if (tilfældigtSpin.contains("Konkurs")) {
-                    liv = 0
-                    Liv.setText(liv.toString())
-                    Toast.makeText(
-                        applicationContext,
-                        "Du er gået konkurs og har hermed tabt spillet",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    erHjuletDrejet = true
-                }
+                drejHjulIndeholderSpecielleOrd()
 
             } else {
                 Toast.makeText(
@@ -145,6 +125,34 @@ class Spilgame : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+        }
+    }
+
+    private fun drejHjulIndeholderSpecielleOrd() {
+        if (tilfældigtSpin.contains("Ekstra liv")) {
+            liv += 1
+            Liv.setText(liv.toString())
+            Toast.makeText(
+                applicationContext,
+                "Du har fået et ekstra liv",
+                Toast.LENGTH_SHORT
+            )
+                .show()
+        } else if (tilfældigtSpin.contains("Tabt liv")) {
+            liv -= 1
+            Liv.setText(liv.toString())
+            Toast.makeText(applicationContext, "Du har mistet et liv", Toast.LENGTH_SHORT)
+                .show()
+        } else if (tilfældigtSpin.contains("Konkurs")) {
+            liv = 0
+            Liv.setText(liv.toString())
+            Toast.makeText(
+                applicationContext,
+                "Du er gået konkurs og har hermed tabt spillet",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            erHjuletDrejet = true
         }
     }
 
@@ -189,9 +197,9 @@ class Spilgame : AppCompatActivity() {
                 "Du har fået 1500 point ",
                 Toast.LENGTH_SHORT
             ).show()
+
+
         }
-
-
     }
 
     fun getBogstavFraBruger() {
@@ -200,7 +208,6 @@ class Spilgame : AppCompatActivity() {
                 if (erHjuletDrejet) {
                     val tastBogstav = button.text.toString().lowercase()
                     if (erBogstavIHemmeligtOrd(hemmeligtOrd, tastBogstav)) {
-                        fåPoint()
                         var setUnderscore = ""
                         for (words in hemmeligtOrdIUnderscore) {
                             setUnderscore += words
@@ -208,24 +215,25 @@ class Spilgame : AppCompatActivity() {
                         val charArray = bogstavToGæt(setUnderscore, hemmeligtOrd, tastBogstav)
 
                         val data: MutableList<Ord> = ArrayList()
-                        for(i in charArray) {
+                        for (i in charArray) {
                             data.add(Ord("$i"))
 
                         }
                         hemmeligtOrdIUnderscore = data
-                        layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+                        layoutManager =
+                            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                         adapter = ItemAdapter(data)
 
                         Recycler.layoutManager = layoutManager
                         Recycler.setHasFixedSize(true)
                         Recycler.adapter = adapter
-
+                        fåPoint()
                         Toast.makeText(
                             applicationContext,
                             "Du har trykket på bogstavet ${button.text.toString().lowercase()}",
                             Toast.LENGTH_SHORT
                         ).show()
-                        erHjuletDrejet = false
+
 
                     } else {
                         liv -= 1
