@@ -165,7 +165,7 @@ class Spilgame : AppCompatActivity() {
                 "Du har fået 100 point ",
                 Toast.LENGTH_SHORT
             ).show()
-        } else if (tilfældigtSpin.contains("500")) {
+        } else if (tilfældigtSpin.equals("500")) {
             point += 500
             Point.setText(point.toString())
             Toast.makeText(
@@ -173,7 +173,7 @@ class Spilgame : AppCompatActivity() {
                 "Du har fået 500 point ",
                 Toast.LENGTH_SHORT
             ).show()
-        } else if (tilfældigtSpin.contains("1000")) {
+        } else if (tilfældigtSpin.equals("1000")) {
             point += 1000
             Point.setText(point.toString())
             Toast.makeText(
@@ -181,7 +181,7 @@ class Spilgame : AppCompatActivity() {
                 "Du har fået 1000 point ",
                 Toast.LENGTH_SHORT
             ).show()
-        } else if (tilfældigtSpin.contains("1500")) {
+        } else if (tilfældigtSpin.equals("1500")) {
             point += 1500
             Point.setText(point.toString())
             Toast.makeText(
