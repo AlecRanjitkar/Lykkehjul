@@ -1,4 +1,4 @@
-package com.example.lykkehjul
+package com.example.lykkehjul.Fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,6 +16,7 @@ import com.example.lykkehjul.Logik.SpilLogik.multiplyBogstaver
 import com.example.lykkehjul.Model.Ord
 import androidx.navigation.Navigation
 import com.example.lykkehjul.Adapter.ItemAdapter
+import com.example.lykkehjul.R
 
 
 class mainFragment : Fragment() {
