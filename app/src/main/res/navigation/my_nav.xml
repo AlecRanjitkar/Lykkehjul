@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.lykkehjul.mainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_tabtFragment"
+            app:destination="@id/tabtFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_vandtFragment"
+            app:destination="@id/vandtFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tabtFragment"
+        android:name="com.example.lykkehjul.tabtFragment"
+        android:label="fragment_tabt"
+        tools:layout="@layout/fragment_tabt" >
+        <action
+            android:id="@+id/action_tabtFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vandtFragment"
+        android:name="com.example.lykkehjul.vandtFragment"
+        android:label="fragment_vandt"
+        tools:layout="@layout/fragment_vandt" >
+        <action
+            android:id="@+id/action_vandtFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+</navigation>

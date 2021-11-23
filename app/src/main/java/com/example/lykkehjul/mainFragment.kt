@@ -1,29 +1,30 @@
 package com.example.lykkehjul
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lykkehjul.Adapter.ItemAdapter
 import com.example.lykkehjul.Data.Datasource
-import com.example.lykkehjul.Logik.SpilLogik
 import com.example.lykkehjul.Logik.SpilLogik.bogstavToGæt
 import com.example.lykkehjul.Logik.SpilLogik.erBogstavIHemmeligtOrd
 import com.example.lykkehjul.Logik.SpilLogik.multiplyBogstaver
 import com.example.lykkehjul.Model.Ord
+import androidx.navigation.Navigation
+import com.example.lykkehjul.Adapter.ItemAdapter
 
-class Spilgame : AppCompatActivity() {
-    private lateinit var bogstavLayout: ConstraintLayout
-    private lateinit var brugtBogstav: TextView
-    private lateinit var Knap: Button
-    private lateinit var Besked: TextView
-    private lateinit var Knap1: Button
-    private lateinit var Liv: TextView
-    private lateinit var Point: TextView
-    private lateinit var Recycler: RecyclerView
+
+class mainFragment : Fragment() {
+
+    lateinit var Recycler: RecyclerView
+    lateinit var Liv: TextView
+    lateinit var Point: TextView
+    lateinit var Besked: TextView
+    lateinit var Knap: Button
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<ItemAdapter.ViewHolder>? = null
 
@@ -34,24 +35,31 @@ class Spilgame : AppCompatActivity() {
     var liv = 5
     var hemmeligtOrdIUnderscore = mutableListOf<Ord>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_spilgame)
 
-        Recycler = findViewById(R.id.Recycler)
-        Knap = findViewById(R.id.Knap)
-        bogstavLayout = findViewById(R.id.bogstavLayout)
-        brugtBogstav = findViewById(R.id.brugtBogstav)
-        Besked = findViewById(R.id.Besked)
-        Knap1 = findViewById(R.id.Knap1)
-        Liv = findViewById(R.id.Liv)
-        Point = findViewById(R.id.Point)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+
+    ): View? {
+        return inflater.inflate(R.layout.fragment_main, container, false)
+
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Recycler = view.findViewById(R.id.Recycler)
+        Liv = view.findViewById(R.id.Liv)
+        Point = view.findViewById(R.id.Point)
+        Besked = view.findViewById(R.id.Besked)
+        Knap = view.findViewById(R.id.Knap)
+
 
         //Random generator til ord fra Datasource klassen
         //Vælger et random ord fra datasouce klassens liste af ord
         val myDataset = Datasource().loadOrd()
         hemmeligtOrd = myDataset.random().toString()
-
 
         Knap.setOnClickListener {
             //Random generator til points fra Datasource klassen
@@ -61,15 +69,15 @@ class Spilgame : AppCompatActivity() {
             Besked.setText(tilfældigtSpin)
 
         }
-        layoutManager = LinearLayoutManager(this)
+        layoutManager = LinearLayoutManager(activity)
         Recycler.layoutManager = layoutManager
         Recycler.adapter = adapter
 
         val data: MutableList<Ord> = hemmeligtOrdiUndscoreOgMellemrumIOrdet()
         hemmeligtOrdIUnderscore = data
-        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        adapter = ItemAdapter(data)
+        layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
+        adapter = ItemAdapter(data)
         Recycler.layoutManager = layoutManager
         Recycler.setHasFixedSize(true)
         Recycler.adapter = adapter
@@ -83,10 +91,11 @@ class Spilgame : AppCompatActivity() {
         var ord = 'a'
         while (ord <= 'z') {
 
-            val resId = resources.getIdentifier(ord.toString(), "id", packageName)
-            val view: TextView = findViewById(resId)
+            val resId = resources.getIdentifier(ord.toString(), "id", getActivity()?.packageName)
+            val view: TextView = requireView().findViewById(resId)
             buttons.add(view)
             ord++
+
         }
     }
 
@@ -117,7 +126,7 @@ class Spilgame : AppCompatActivity() {
 
             } else {
                 Toast.makeText(
-                    applicationContext,
+                    activity,
                     "Husk at trykke på et bogstav",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -130,25 +139,22 @@ class Spilgame : AppCompatActivity() {
         if (tilfældigtSpin.contains("Ekstra liv")) {
             liv += 1
             Liv.setText(liv.toString())
-            Toast.makeText(applicationContext, "Du har fået et ekstra liv", Toast.LENGTH_SHORT)
+            Toast.makeText(activity, "Du har fået et ekstra liv", Toast.LENGTH_SHORT)
                 .show()
 
         } else if (tilfældigtSpin.contains("Tabt liv")) {
             liv -= 1
             Liv.setText(liv.toString())
-            Toast.makeText(applicationContext, "Du har mistet et liv", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Du har mistet et liv", Toast.LENGTH_SHORT).show()
 
         } else if (tilfældigtSpin.contains("Konkurs")) {
             liv = 0
             Liv.setText(liv.toString())
-            Toast.makeText(
-                applicationContext,
-                "Du er gået konkurs og har hermed tabt spillet",
-                Toast.LENGTH_SHORT
-            ).show()
+
         } else {
             erHjuletDrejet = true
         }
+        spilTabt()
     }
 
     fun fåPoint(tastBogstav: String) {
@@ -193,15 +199,15 @@ class Spilgame : AppCompatActivity() {
                             data.add(Ord("$i"))
                         }
                         hemmeligtOrdIUnderscore = data
-                        layoutManager =
-                            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                        adapter = ItemAdapter(data)
+                        var layoutManager =
+                            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                        var adapter = ItemAdapter(data)
 
                         Recycler.layoutManager = layoutManager
                         Recycler.setHasFixedSize(true)
                         Recycler.adapter = adapter
                         Toast.makeText(
-                            applicationContext,
+                            activity,
                             "Du har trykket på bogstavet ${button.text.toString().lowercase()}",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -211,20 +217,33 @@ class Spilgame : AppCompatActivity() {
                         liv -= 1
                         Liv.setText(liv.toString())
                         Toast.makeText(
-                            applicationContext,
+                            activity,
                             "Det hemmelig ord har dsv ikke dette bogstav, du har mistet et liv",
                             Toast.LENGTH_SHORT
                         ).show()
                         erHjuletDrejet = false
+
                     }
                     button.setVisibility(View.GONE)
                 } else {
-                    Toast.makeText(applicationContext, "Husk at rotere hjulet", Toast.LENGTH_SHORT)
+                    Toast.makeText( activity, "Husk at rotere hjulet", Toast.LENGTH_SHORT)
                         .show()
                 }
-                erHjuletDrejet = false
-
+                spilVundet()
+                spilTabt()
             }
         }
     }
+    private  fun spilVundet() {
+        if(!hemmeligtOrdIUnderscore.contains(Ord("."))) {
+            view?.let { Navigation.findNavController(it).navigate(R.id.action_mainFragment_to_vandtFragment) }
+        }
+    }
+
+    private fun spilTabt() {
+        if(liv == 0) {
+            view?.let { Navigation.findNavController(it).navigate(R.id.action_mainFragment_to_tabtFragment) }
+        }
+    }
 }
+

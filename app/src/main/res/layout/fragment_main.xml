@@ -5,33 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#009089"
-    tools:context=".Spilgame">
+    tools:context=".mainFragment">
+
 
     <Button
         android:id="@+id/Knap"
         android:layout_width="116dp"
         android:layout_height="62dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="96dp"
         android:backgroundTint="@color/black"
         android:gravity="center"
         android:text="Rotere Hjulet"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.288"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/Knap1"
-        android:layout_width="116dp"
-        android:layout_height="62dp"
-        android:layout_marginBottom="100dp"
-        android:backgroundTint="@color/black"
-        android:text="Start new game"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.711"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -404,7 +392,7 @@
             android:padding="16dp"
             app:constraint_referenced_ids="a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z"
             app:flow_wrapMode="chain"
-             />
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -423,3 +411,6 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
