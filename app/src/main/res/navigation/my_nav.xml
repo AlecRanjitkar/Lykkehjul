@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.lykkehjul.mainFragment"
+        android:name="com.example.lykkehjul.Fragment.mainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/tabtFragment"
-        android:name="com.example.lykkehjul.tabtFragment"
+        android:name="com.example.lykkehjul.Fragment.tabtFragment"
         android:label="fragment_tabt"
         tools:layout="@layout/fragment_tabt" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/vandtFragment"
-        android:name="com.example.lykkehjul.vandtFragment"
+        android:name="com.example.lykkehjul.Fragment.vandtFragment"
         android:label="fragment_vandt"
         tools:layout="@layout/fragment_vandt" >
         <action

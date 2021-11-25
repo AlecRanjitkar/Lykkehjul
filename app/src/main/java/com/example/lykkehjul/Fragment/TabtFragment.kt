@@ -26,7 +26,7 @@ class tabtFragment : Fragment() {
 
         val fragmentStartNytSpil: Button = view.findViewById(R.id.fragmentStartNytSpil)
 
-        fragmentStartNytSpil.setOnClickListener{
+        fragmentStartNytSpil.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_tabtFragment_to_mainFragment)
         }
     }

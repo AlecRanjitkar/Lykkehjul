@@ -37,7 +37,6 @@ class mainFragment : Fragment() {
     var hemmeligtOrdIUnderscore = mutableListOf<Ord>()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,20 +55,11 @@ class mainFragment : Fragment() {
         Besked = view.findViewById(R.id.Besked)
         Knap = view.findViewById(R.id.Knap)
 
-
         //Random generator til ord fra Datasource klassen
         //Vælger et random ord fra datasouce klassens liste af ord
         val myDataset = Datasource().loadOrd()
         hemmeligtOrd = myDataset.random().toString()
 
-        Knap.setOnClickListener {
-            //Random generator til points fra Datasource klassen
-            //Vælger et random antal af point fra datasouce klassens liste af point
-            val hjulSpin = Datasource().loadpoint()
-            tilfældigtSpin = hjulSpin.random().toString()
-            Besked.setText(tilfældigtSpin)
-
-        }
         layoutManager = LinearLayoutManager(activity)
         Recycler.layoutManager = layoutManager
         Recycler.adapter = adapter
@@ -83,8 +73,8 @@ class mainFragment : Fragment() {
         Recycler.setHasFixedSize(true)
         Recycler.adapter = adapter
         initaliserBogstaver()
-        drejHjul()
         getBogstavFraBruger()
+        drejHjul()
     }
 
     private fun initaliserBogstaver() {
@@ -96,7 +86,6 @@ class mainFragment : Fragment() {
             val view: TextView = requireView().findViewById(resId)
             buttons.add(view)
             ord++
-
         }
     }
 
@@ -110,7 +99,6 @@ class mainFragment : Fragment() {
             } else {
                 data.add(Ord("."))
             }
-
         }
         return data
     }
@@ -132,6 +120,8 @@ class mainFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            spilTabt()
+            spilVundet()
         }
     }
 
@@ -155,7 +145,7 @@ class mainFragment : Fragment() {
         } else {
             erHjuletDrejet = true
         }
-        spilTabt()
+
     }
 
     fun fåPoint(tastBogstav: String) {
@@ -200,9 +190,9 @@ class mainFragment : Fragment() {
                             data.add(Ord("$i"))
                         }
                         hemmeligtOrdIUnderscore = data
-                        var layoutManager =
+                            layoutManager =
                             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                        var adapter = ItemAdapter(data)
+                            adapter = ItemAdapter(data)
 
                         Recycler.layoutManager = layoutManager
                         Recycler.setHasFixedSize(true)
@@ -213,6 +203,7 @@ class mainFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
 
+
                     } else {
                         // mister et liv hvis hemmeligt ord ikke indeholder bogstav
                         liv -= 1
@@ -222,12 +213,11 @@ class mainFragment : Fragment() {
                             "Det hemmelig ord har dsv ikke dette bogstav, du har mistet et liv",
                             Toast.LENGTH_SHORT
                         ).show()
-                        erHjuletDrejet = false
-
                     }
+                    erHjuletDrejet = false
                     button.setVisibility(View.GONE)
                 } else {
-                    Toast.makeText( activity, "Husk at rotere hjulet", Toast.LENGTH_SHORT)
+                    Toast.makeText(activity, "Husk at rotere hjulet", Toast.LENGTH_SHORT)
                         .show()
                 }
                 spilVundet()
@@ -235,15 +225,20 @@ class mainFragment : Fragment() {
             }
         }
     }
-    private  fun spilVundet() {
-        if(!hemmeligtOrdIUnderscore.contains(Ord("."))) {
-            view?.let { Navigation.findNavController(it).navigate(R.id.action_mainFragment_to_vandtFragment) }
+
+    private fun spilVundet() {
+        if (!hemmeligtOrdIUnderscore.contains(Ord("."))) {
+            view?.let {
+                Navigation.findNavController(it).navigate(R.id.action_mainFragment_to_vandtFragment)
+            }
         }
     }
 
     private fun spilTabt() {
-        if(liv == 0) {
-            view?.let { Navigation.findNavController(it).navigate(R.id.action_mainFragment_to_tabtFragment) }
+        if (liv == 0) {
+            view?.let {
+                Navigation.findNavController(it).navigate(R.id.action_mainFragment_to_tabtFragment)
+            }
         }
     }
 }

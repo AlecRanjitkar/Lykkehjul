@@ -6,6 +6,10 @@
         <entry key="..\:/Users/alexr/AndroidStudioProjects/Lykkehjul/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2703125" />
         <entry key="..\:/Users/alexr/AndroidStudioProjects/Lykkehjul/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/alexr/AndroidStudioProjects/Lykkehjul/app/src/main/res/layout/activity_spilgame.xml" value="0.2513586956521739" />
+        <entry key="..\:/Users/alexr/AndroidStudioProjects/Lykkehjul/app/src/main/res/layout/fragment_main.xml" value="0.264" />
+        <entry key="..\:/Users/alexr/AndroidStudioProjects/Lykkehjul/app/src/main/res/layout/fragment_tabt.xml" value="0.1" />
+        <entry key="..\:/Users/alexr/AndroidStudioProjects/Lykkehjul/app/src/main/res/layout/fragment_vandt.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/alexr/AndroidStudioProjects/Lykkehjul/app/src/main/res/layout/fragment_vandt_fragtment.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/alexr/AndroidStudioProjects/Lykkehjul/app/src/main/res/layout/list_item.xml" value="0.25416666666666665" />
       </map>
     </option>
