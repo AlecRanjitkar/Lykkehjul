@@ -1,6 +1,6 @@
 # Lykkehjul
 
-![](LykkehjulMainFragment.PNG)
+![](LykkeHjulMainFragment.PNG)
 
 Handler om at gætte det hemmelig ord, man har 5 liv. 
 Hver gang man rotere hjulet får man et random input f.eks points, tabtliv, ekstraliv eller konkurs, hvori de hverisær gør noget bestemt. 
