@@ -7,6 +7,6 @@ Hver gang man rotere hjulet får man et random input f.eks points, tabtliv, ekst
 Når man har 0 liv har man tabt spillet, mens hvis man gætter alle bogstaver i det hemmelig ord har man vundet. Det Hemmeligord man skal gætte er fodboldhold
 
 
-![](VandtFragment.PNG)
+![](Vandtfragment.PNG)
 
 ![](Tabtfragment.PNG)
