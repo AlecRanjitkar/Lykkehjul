@@ -59,8 +59,8 @@
         android:id="@+id/Liv"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="28dp"
         android:text="5"
         android:textColor="@color/white"
         android:textSize="25dp"
@@ -388,6 +388,16 @@
         app:layout_constraintTop_toBottomOf="@id/Besked"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/list_item" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/pikpng_com_restart_icon_png_3823370"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
