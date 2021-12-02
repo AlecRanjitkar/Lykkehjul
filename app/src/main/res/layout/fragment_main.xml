@@ -45,7 +45,7 @@
         android:layout_height="35dp"
         android:layout_marginTop="170dp"
         android:gravity="center"
-        android:text="Rotere Hjulet"
+        android:text="Start spil ved at Rotere Hjulet"
         android:textColor="@color/white"
         android:textSize="30dp"
         app:layout_constraintHorizontal_bias="0.0"
