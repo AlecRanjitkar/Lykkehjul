@@ -1,0 +1,2 @@
+Jeg har taget inspiration af Bogstav knapperne fra A - Z fra et hangmanspil
+https://github.com/usmaanz/Hangman
