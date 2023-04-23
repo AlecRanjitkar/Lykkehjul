@@ -59,14 +59,14 @@
         android:id="@+id/imageView3"
         android:layout_width="404dp"
         android:layout_height="345dp"
-        android:layout_marginStart="204dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="35dp"
         android:layout_marginBottom="39dp"
         android:src="@drawable/clipart4503897"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentTabt"
-        app:layout_constraintVertical_bias="0.291" />
+        app:layout_constraintVertical_bias="0.009" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,12 +10,8 @@ import com.example.lykkehjul.R
 
 class ItemAdapter(val data: List<Ord>) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
-    val item: List<Ord>
-
-    init {
-        this.item = ArrayList()
-    }
-
+    // Functionen bliver kaldt når Recyclerview har brug for en ny holder, til at repræsentere en item.
+    // Der returnes en ny ViewHolder Object som holder den inflated layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAdapter.ViewHolder {
         val adapterLayout =
             LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
@@ -23,6 +19,8 @@ class ItemAdapter(val data: List<Ord>) : RecyclerView.Adapter<ItemAdapter.ViewHo
         return ViewHolder(adapterLayout)
     }
 
+    // Bliver kaldt når recyclerview gerne vil vise data i en partikuler position. Den sætter teksten af
+    // itemTitle TextView i ViewHolderen til ord propertien for det tilsvarende ord objekt
     override fun onBindViewHolder(holder: ItemAdapter.ViewHolder, position: Int) {
         holder.itemTitle.text = data[position].ord
     }

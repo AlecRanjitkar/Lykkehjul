@@ -1,10 +1,10 @@
-package com.example.lykkehjul.Data
+package com.example.lykkehjul.Model
 
 import com.example.lykkehjul.Model.Ord
 
+//Brugt til at give adgang til data
 class Datasource {
 
-    // Liste af ord over Fodboldhold
     fun loadOrd(): List<Ord>{
         return listOf<Ord>(
             Ord("bayern munichen"),
